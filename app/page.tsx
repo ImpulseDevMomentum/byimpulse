@@ -843,7 +843,7 @@ export default function Home() {
               transition={{ duration: 0.8, delay: 0.2 }}
               viewport={{ once: true }}
             >
-              <p className="text-3xl md:text-4xl lg:text-5xl text-gray-800 leading-relaxed font-light mb-12">
+              <p className="text-3xl md:text-4xl lg:text-5xl text-gray-500 leading-relaxed font-light mb-12">
                 From initial concept and strategic planning to{' '}
                 delivering a polished final product, I focus on{' '}
                 creating projects that not only meet your goals but{' '}
@@ -857,7 +857,7 @@ export default function Home() {
               transition={{ duration: 0.8, delay: 0.4 }}
               viewport={{ once: true }}
             >
-              <p className="text-3xl md:text-4xl lg:text-5xl text-gray-800 leading-relaxed font-light">
+              <p className="text-3xl md:text-4xl lg:text-5xl text-gray-500 leading-relaxed font-light">
                 Driven by in-depth research, user-centered design{' '}
                 principles, and real-world feedback, my designs go{' '}
                 beyond appearance—they <span className="font-medium" style={{ fontFamily: 'serif' }}>communicate</span>, <span className="font-medium" style={{ fontFamily: 'serif' }}>inspire</span>,{' '}
