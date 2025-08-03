@@ -318,7 +318,27 @@ function ContactSection() {
             className="text-4xl md:text-5xl font-bold text-zinc-900 mb-8 md:mb-12"
           >
             New project, partnership, or just want to chat?{' '}
-            <span className="text-zinc-700">Hit me up!</span>
+            <motion.span
+              style={{
+                background: 'linear-gradient(to right, #1a1a2e, #0a0a1a, #2a2a4e, #0a0a1a, #1a1a2e)',
+                backgroundSize: '300% auto',
+                backgroundClip: 'text',
+                WebkitBackgroundClip: 'text',
+                color: 'transparent',
+              }}
+              animate={{
+                backgroundPosition: ['0% center', '200% center'],
+              }}
+              transition={{
+                duration: 3,
+                repeat: Infinity,
+                repeatType: 'mirror',
+                ease: 'linear',
+              }}
+              className="inline-block"
+            >
+              Hit me up!
+            </motion.span>
           </motion.h2>
 
           <motion.div
