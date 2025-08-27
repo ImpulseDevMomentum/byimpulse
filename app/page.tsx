@@ -268,7 +268,7 @@ function ContactSection() {
             className="text-6xl md:text-7xl lg:text-8xl font-black text-zinc-900 leading-none mb-4"
             style={{ fontFamily: 'Arial Black', letterSpacing: '-0.05em' }}
           >
-            Kacper Kowalewski.
+            I̸m̸p̸u̸l̸s̸e̸'
           </motion.h1>
 
           <motion.div
