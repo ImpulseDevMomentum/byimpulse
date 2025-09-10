@@ -7,6 +7,9 @@ const inter = Inter({ subsets: ['latin'] })
 export const metadata: Metadata = {
   title: 'Portfolio, Start working with me!',
   description: "My Portfolio, feel free to hit me up!",
+  icons: {
+    icon: '/me.jpg',
+  },
   keywords: ['portfolio', 'developer', 'designer', 'react', 'nextjs', 'typescript', 'dark theme'],
   authors: [{ name: 'Your Name' }],
 }

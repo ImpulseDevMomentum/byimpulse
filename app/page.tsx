@@ -12,15 +12,27 @@ const projectsWords = projectsText.split(' ')
 const projects = [
   {
     title: "Wish Logger",
-    year: "2025",
+    year: "discontinued",
     description: "Wish Logger - Discord Bot helping handful of people in their daily tasks, moderation your community has never been easier.",
     image: "/wish.png"
   },
   {
-    title: "Nulldrop",
-    year: "2025", 
-    description: "Nulldrop - secure temporary mails and phone numbers, create your null in seconds, safely, with care.",
-    image: "/null.png"
+    title: "Null Drop",
+    year: "-", 
+    description: "Null Drop - secure file uploads, generate links for your files and share them with your friends.",
+    image: "/drop.png"
+  },
+  {
+    title: "Null Mails",
+    year: "-",
+    description: "Null Mails - secure temporary mails and phone numbers, create your null in seconds, safely, with care.",
+    image: "/mails.png"
+  },
+  {
+    title: "Null Tools",
+    year: "2025",
+    description: "Null Tools - collection of null apps & tools, to make developer lifes easier.",
+    image: "/tools.png"
   }
 ]
 
@@ -245,13 +257,42 @@ function ContactSection() {
     <section className="relative bg-zinc-100 py-20 px-6 overflow-hidden">
       <div className="max-w-7xl mx-auto flex flex-col md:flex-row items-center md:items-start gap-12 md:gap-20">
         
-        <div className="flex-1 flex flex-col items-center md:items-start text-center md:text-left">
+        <div className="flex-1 flex flex-col items-center md:items-start text-center md:text-left relative">
+          <motion.div
+            initial={{ opacity: 0, scale: 0 }}
+            whileInView={{ opacity: 1, scale: 1 }}
+            transition={{ duration: 0.8, delay: 0.5 }}
+            viewport={{ once: true }}
+            className="absolute -top-4 -left-4 w-3 h-3 bg-zinc-400 rounded-full z-10"
+          />
+          <motion.div
+            initial={{ opacity: 0, scale: 0 }}
+            whileInView={{ opacity: 1, scale: 1 }}
+            transition={{ duration: 0.8, delay: 0.7 }}
+            viewport={{ once: true }}
+            className="absolute -top-2 -right-8 w-2 h-2 bg-zinc-500 transform rotate-45 z-10"
+          />
+          <motion.div
+            initial={{ opacity: 0, scaleX: 0 }}
+            whileInView={{ opacity: 1, scaleX: 1 }}
+            transition={{ duration: 1, delay: 0.9 }}
+            viewport={{ once: true }}
+            className="absolute top-1/3 -left-12 h-px bg-zinc-300 w-8 z-10"
+          />
+          <motion.div
+            initial={{ opacity: 0, scale: 0 }}
+            whileInView={{ opacity: 1, scale: 1 }}
+            transition={{ duration: 0.8, delay: 1.1 }}
+            viewport={{ once: true }}
+            className="absolute bottom-1/4 -right-6 w-1 h-1 bg-zinc-400 rounded-full z-10"
+          />
+
           <motion.div
             initial={{ opacity: 0, y: 50 }}
             whileInView={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8, delay: 0.2 }}
             viewport={{ once: true }}
-            className="w-full max-w-[400px] aspect-[4/3] bg-zinc-200 rounded-xl overflow-hidden mb-12"
+            className="w-full max-w-[400px] aspect-[4/3] bg-zinc-200 rounded-xl overflow-hidden mb-12 relative"
           >
             <img 
               src="/me.jpg"
@@ -284,6 +325,7 @@ function ContactSection() {
             <div className="flex gap-4">
               <a href="https://github.com/ImpulseDevMomentum" className="hover:text-zinc-900 transition-colors">Github</a>
               <a href="mailto:contact@byimpulse.xyz" className="hover:text-zinc-900 transition-colors">Email</a>
+              <a href="https://dc.byimpulse.xyz" className="hover:text-zinc-900 transition-colors">Discord</a>
               <a href="#" className="hover:text-zinc-900 transition-colors">Resume</a>
             </div>
           </motion.div>
@@ -378,9 +420,9 @@ function ContactSection() {
           </motion.div>
         </div>
       </div>
-    </section>
-  )
-}
+      </section>
+    )
+  }
 
 function ExpertiseSection() {
   return (
@@ -605,15 +647,29 @@ export default function Home() {
               width="28"
               height="28"
               viewBox="0 0 24 24"
-              fill="none"
-              stroke="currentColor"
-              strokeWidth="2"
-              strokeLinecap="round"
-              strokeLinejoin="round"
+              fill="currentColor"
               className="lucide lucide-github"
             >
-              <path d="M15 22v-4a4.8 4.8 0 0 0-1-3.2c3.25 0 6.8-.75 6.8-7 0-1.75-.75-3.25-2-4.25 0 0-1.5-.5-4 1.25S7 3.25 7 3.25A5.8 5.8 0 0 0 5 4.5c-1.25 1-2 2.5-2 4.25 0 6.25 3.5 7 6.75 7A4.8 4.8 0 0 0 10 18v4" />
-              <path d="M12 2C6.477 2 2 6.477 2 12c0 4.416 2.866 8.165 6.839 9.489.5.09.68-.217.68-.483 0-.237-.008-.867-.013-1.7z" />
+              <path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z"/>
+            </svg>
+          </motion.a>
+          <motion.a
+            href="https://dc.byimpulse.xyz"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="text-gray-400 hover:text-white transition-colors duration-300"
+            whileHover={{ scale: 1.1 }}
+            aria-label="Discord server"
+          >
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              width="28"
+              height="28"
+              viewBox="0 0 24 24"
+              fill="currentColor"
+              className="lucide lucide-discord"
+            >
+              <path d="M19.27 5.33C17.94 4.71 16.5 4.26 15 4a.09.09 0 0 0-.07.03c-.18.33-.39.76-.53 1.09a16.09 16.09 0 0 0-4.8 0c-.14-.34-.35-.76-.54-1.09-.01-.02-.04-.03-.07-.03-1.5.26-2.93.71-4.27 1.33-.01 0-.02.01-.03.02-2.72 4.07-3.47 8.03-3.1 11.95 0 .02.01.04.03.05 1.8 1.32 3.53 2.12 5.24 2.65.03.01.06 0 .07-.02.4-.55.76-1.13 1.07-1.74.02-.04 0-.08-.04-.09-.57-.22-1.11-.48-1.64-.78-.04-.02-.04-.08-.01-.11.11-.08.22-.17.33-.25.02-.02.05-.02.07-.01 3.44 1.57 7.15 1.57 10.55 0 .02-.01.05-.01.07.01.11.09.22.17.33.26.04.03.04.09-.01.11-.52.31-1.07.56-1.64.78-.04.01-.05.06-.04.09.32.61.68 1.19 1.07 1.74.03.01.06.02.09.01 1.72-.53 3.45-1.33 5.25-2.65.02-.01.03-.03.03-.05.44-4.53-.73-8.46-3.1-11.95-.01-.01-.02-.02-.04-.02zM8.52 14.91c-1.03 0-1.89-.95-1.89-2.12s.84-2.12 1.89-2.12c1.06 0 1.9.96 1.89 2.12 0 1.17-.84 2.12-1.89 2.12zm6.97 0c-1.03 0-1.89-.95-1.89-2.12s.84-2.12 1.89-2.12c1.06 0 1.9.96 1.89 2.12 0 1.17-.83 2.12-1.89 2.12z"/>
             </svg>
           </motion.a>
           <motion.a
