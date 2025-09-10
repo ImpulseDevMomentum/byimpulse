@@ -13,27 +13,45 @@ const projects = [
   {
     title: "Wish Logger",
     year: "discontinued",
-    description: "Wish Logger - Discord Bot helping handful of people in their daily tasks, moderation your community has never been easier.",
-    image: "/wish.png"
+    description: "Wish Logger - Project has been discontinued due to Discord's doing.",
+    image: "/wish.png",
+    link: ""
   },
   {
     title: "Null Drop",
     year: "-", 
-    description: "Null Drop - secure file uploads, generate links for your files and share them with your friends.",
-    image: "/drop.png"
+    description: "Null Drop - Secure file uploads, generate links for your files and share them with your friends.",
+    image: "/drop.png",
+    link: "https://nulldrop.xyz"
   },
   {
-    title: "Null Mails",
+    title: "Null Mails [Outdated Image Cover]",
     year: "-",
-    description: "Null Mails - secure temporary mails and phone numbers, create your null in seconds, safely, with care.",
-    image: "/mails.png"
+    description: "Null Mails - Secure temporary mails and phone numbers, create your null in seconds, safely, with care.",
+    image: "/mails.png",
+    link: "https://nullmails.xyz"
   },
   {
     title: "Null Tools",
     year: "2025",
-    description: "Null Tools - collection of null apps & tools, to make developer lifes easier.",
-    image: "/tools.png"
+    description: "Null Tools - Collection of null apps & tools, to make developer lifes easier.",
+    image: "/tools.png",
+    link: "https://nulltools.xyz"
   }
+  // {
+  //   title: "Null Vault",
+  //   year: "-",
+  //   description: "Null Vault - Secure payment processor, billing, and invoicing solution.",
+  //   image: "",
+  //   link: ""
+  // },
+  // {
+  //   title: "Null Pass",
+  //   year: "2025",
+  //   description: "Null Pass - Secure account manager for Null Tools apps & tools.",
+  //   image: "",
+  //   link: ""
+  // }
 ]
 
 const expertiseAreas = [
@@ -114,12 +132,13 @@ const TestimonialCard = ({ tag, text, author, role, index }: TestimonialCardProp
 type ProjectCardProps = {
   title: string;
   year: string;
+  link: string;
   description: string;
   index: number;
   image: string;
 };
 
-const ProjectCard = ({ title, year, description, index, image }: ProjectCardProps) => {
+const ProjectCard = ({ title, year, description, index, image, link }: ProjectCardProps) => {
   return (
     <motion.div
       initial={{ opacity: 0, y: 50 }}
@@ -128,7 +147,9 @@ const ProjectCard = ({ title, year, description, index, image }: ProjectCardProp
       viewport={{ once: true }}
       className="group"
     >
-      <div className="w-full aspect-[4/3] bg-zinc-800 rounded-2xl mb-6 overflow-hidden">
+      <div className="w-full aspect-[4/3] bg-zinc-800 rounded-2xl mb-6 overflow-hidden relative">
+        <a href={link} target="_blank" rel="noopener noreferrer" className="absolute inset-0 z-10">
+        </a>
         <img 
           src={image} 
           alt={title}
@@ -163,6 +184,7 @@ function ProjectsGrid() {
               year={project.year}
               description={project.description}
               image={project.image}
+              link={project.link}
               index={index}
             />
           ))}
@@ -871,9 +893,9 @@ export default function Home() {
               viewport={{ once: true }}
             >
               <p className="text-3xl md:text-4xl lg:text-5xl text-gray-800 leading-relaxed font-light">
-                Currently, a <span className="font-medium">growning Discord Bot Developer, Owner of <span className="font-bold">Wish Logger.</span><br /> <> <br /></>
+                Currently, a <span className="font-medium">growning developer, former owner of <span className="font-bold">Wish Logger.</span><br /> <> <br /></>
                 </span>{' '}
-                <span className="font-medium">Founder</span> of <span className="font-bold">Nulldrop</span> with <span className="font-bold">2 years</span> of experience across{' '}
+                <span className="font-medium">Founder</span> of <span className="font-bold">Null Tools</span> with <span className="font-bold">2 years</span> of experience across{' '}
                 Discord bots, Minecraft servers, Network Management, Service Provider, and more.{' '}
                 <br />
                 <br />
