@@ -3,7 +3,7 @@
 import { useState, useEffect, useRef, ReactNode } from 'react'
 import { motion, AnimatePresence, useScroll, useTransform, MotionValue } from 'framer-motion'
 
-const text = "I'm Discord Bot Developer, Minecraft Technician, Backend Developer, Community Manager, CS student, network manager, and more."
+const text = "I'm Discord Bot Developer, Backend Developer, Community Manager, CS student, network manager, and more."
 const words = text.split(' ')
 
 const projectsText = "A collection of projects crafted with care and thoughtfulness, each project representing my journey to blend creativity and purpose in meaningful ways."
@@ -19,7 +19,7 @@ const projects = [
   },
   {
     title: "Null Drop",
-    year: "-", 
+    year: "2025", 
     description: "Null Drop - Secure file uploads, generate links for your files and share them with your friends.",
     image: "/drop.png",
     link: "https://nulldrop.xyz"
