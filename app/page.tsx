@@ -1,7 +1,7 @@
 'use client'
 
 import { useState, useEffect, useRef, ReactNode } from 'react'
-import { motion, AnimatePresence, useScroll, useTransform, MotionValue } from 'framer-motion'
+import { motion, AnimatePresence, useScroll, useTransform, MotionValue, useMotionValue, useSpring, useMotionValueEvent } from 'framer-motion'
 
 const text = "I'm Discord Bot Developer, Backend Developer, Community Manager, CS student, network manager, and more."
 const words = text.split(' ')
@@ -633,6 +633,11 @@ function ProjectsTextSection() {
 
 export default function Home() {
   const [currentName, setCurrentName] = useState('Kacper')
+  const [initialIconPositions, setInitialIconPositions] = useState({ 
+    github: { x: 0, y: 32 },
+    discord: { x: 0, y: 32 },
+    email: { x: 0, y: 32 }
+  })
 
   useEffect(() => {
     const nameInterval = setInterval(() => {
@@ -641,82 +646,101 @@ export default function Home() {
     return () => clearInterval(nameInterval)
   }, [])
 
+  useEffect(() => {
+    const updatePositions = () => {
+      setInitialIconPositions({
+        github: { x: window.innerWidth - 120, y: 32 },
+        discord: { x: window.innerWidth - 80, y: 32 },
+        email: { x: window.innerWidth - 40, y: 32 }
+      })
+    }
+    
+    updatePositions()
+    window.addEventListener('resize', updatePositions)
+    return () => window.removeEventListener('resize', updatePositions)
+  }, [])
+
   const targetRef = useRef<HTMLDivElement>(null)
   const { scrollYProgress } = useScroll({
     target: targetRef,
     offset: ['start start', 'end end'],
   })
 
-  const wallY = useTransform(scrollYProgress, [0, 0.2], ['100%', '0%'])
+  const wallY = useTransform(scrollYProgress, [0, 0.75], ['100%', '0%'])
   const heroOpacity = useTransform(scrollYProgress, [0, 0.1], [1, 0])
+  const iconsOpacity = useTransform(scrollYProgress, [0, 0.1], [1, 0])
 
   const textContainerOpacity = useTransform(scrollYProgress, [0.2, 0.25], [0, 1])
 
   return (
     <>
       <main ref={targetRef} className="relative h-[250vh]">
-        <div className="absolute top-8 right-8 z-50 flex space-x-4">
-          <motion.a
-            href="https://github.com/ImpulseDevMomentum"
-            target="_blank"
-            rel="noopener noreferrer"
-            className="text-gray-400 hover:text-white transition-colors duration-300"
-            whileHover={{ scale: 1.1 }}
-            aria-label="GitHub profile"
-          >
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              width="28"
-              height="28"
-              viewBox="0 0 24 24"
-              fill="currentColor"
-              className="lucide lucide-github"
+        {initialIconPositions.github.x > 0 && (
+          <>
+            <DraggableIcon
+              href="https://github.com/ImpulseDevMomentum"
+              ariaLabel="GitHub profile"
+              initialX={initialIconPositions.github.x}
+              initialY={initialIconPositions.github.y}
+              iconId="github"
+              opacity={iconsOpacity}
             >
-              <path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z"/>
-            </svg>
-          </motion.a>
-          <motion.a
-            href="https://dc.byimpulse.xyz"
-            target="_blank"
-            rel="noopener noreferrer"
-            className="text-gray-400 hover:text-white transition-colors duration-300"
-            whileHover={{ scale: 1.1 }}
-            aria-label="Discord server"
-          >
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              width="28"
-              height="28"
-              viewBox="0 0 24 24"
-              fill="currentColor"
-              className="lucide lucide-discord"
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                width="28"
+                height="28"
+                viewBox="0 0 24 24"
+                fill="currentColor"
+                className="lucide lucide-github"
+              >
+                <path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z"/>
+              </svg>
+            </DraggableIcon>
+            <DraggableIcon
+              href="https://dc.byimpulse.xyz"
+              ariaLabel="Discord server"
+              initialX={initialIconPositions.discord.x}
+              initialY={initialIconPositions.discord.y}
+              iconId="discord"
+              opacity={iconsOpacity}
             >
-              <path d="M19.27 5.33C17.94 4.71 16.5 4.26 15 4a.09.09 0 0 0-.07.03c-.18.33-.39.76-.53 1.09a16.09 16.09 0 0 0-4.8 0c-.14-.34-.35-.76-.54-1.09-.01-.02-.04-.03-.07-.03-1.5.26-2.93.71-4.27 1.33-.01 0-.02.01-.03.02-2.72 4.07-3.47 8.03-3.1 11.95 0 .02.01.04.03.05 1.8 1.32 3.53 2.12 5.24 2.65.03.01.06 0 .07-.02.4-.55.76-1.13 1.07-1.74.02-.04 0-.08-.04-.09-.57-.22-1.11-.48-1.64-.78-.04-.02-.04-.08-.01-.11.11-.08.22-.17.33-.25.02-.02.05-.02.07-.01 3.44 1.57 7.15 1.57 10.55 0 .02-.01.05-.01.07.01.11.09.22.17.33.26.04.03.04.09-.01.11-.52.31-1.07.56-1.64.78-.04.01-.05.06-.04.09.32.61.68 1.19 1.07 1.74.03.01.06.02.09.01 1.72-.53 3.45-1.33 5.25-2.65.02-.01.03-.03.03-.05.44-4.53-.73-8.46-3.1-11.95-.01-.01-.02-.02-.04-.02zM8.52 14.91c-1.03 0-1.89-.95-1.89-2.12s.84-2.12 1.89-2.12c1.06 0 1.9.96 1.89 2.12 0 1.17-.84 2.12-1.89 2.12zm6.97 0c-1.03 0-1.89-.95-1.89-2.12s.84-2.12 1.89-2.12c1.06 0 1.9.96 1.89 2.12 0 1.17-.83 2.12-1.89 2.12z"/>
-            </svg>
-          </motion.a>
-          <motion.a
-            href="mailto:contact@byimpulse.xyz"
-            className="text-gray-400 hover:text-white transition-colors duration-300"
-            whileHover={{ scale: 1.1 }}
-            aria-label="Send an email"
-          >
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              width="28"
-              height="28"
-              viewBox="0 0 24 24"
-              fill="none"
-              stroke="currentColor"
-              strokeWidth="2"
-              strokeLinecap="round"
-              strokeLinejoin="round"
-              className="lucide lucide-mail"
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                width="28"
+                height="28"
+                viewBox="0 0 24 24"
+                fill="currentColor"
+                className="lucide lucide-discord"
+              >
+                <path d="M19.27 5.33C17.94 4.71 16.5 4.26 15 4a.09.09 0 0 0-.07.03c-.18.33-.39.76-.53 1.09a16.09 16.09 0 0 0-4.8 0c-.14-.34-.35-.76-.54-1.09-.01-.02-.04-.03-.07-.03-1.5.26-2.93.71-4.27 1.33-.01 0-.02.01-.03.02-2.72 4.07-3.47 8.03-3.1 11.95 0 .02.01.04.03.05 1.8 1.32 3.53 2.12 5.24 2.65.03.01.06 0 .07-.02.4-.55.76-1.13 1.07-1.74.02-.04 0-.08-.04-.09-.57-.22-1.11-.48-1.64-.78-.04-.02-.04-.08-.01-.11.11-.08.22-.17.33-.25.02-.02.05-.02.07-.01 3.44 1.57 7.15 1.57 10.55 0 .02-.01.05-.01.07.01.11.09.22.17.33.26.04.03.04.09-.01.11-.52.31-1.07.56-1.64.78-.04.01-.05.06-.04.09.32.61.68 1.19 1.07 1.74.03.01.06.02.09.01 1.72-.53 3.45-1.33 5.25-2.65.02-.01.03-.03.03-.05.44-4.53-.73-8.46-3.1-11.95-.01-.01-.02-.02-.04-.02zM8.52 14.91c-1.03 0-1.89-.95-1.89-2.12s.84-2.12 1.89-2.12c1.06 0 1.9.96 1.89 2.12 0 1.17-.84 2.12-1.89 2.12zm6.97 0c-1.03 0-1.89-.95-1.89-2.12s.84-2.12 1.89-2.12c1.06 0 1.9.96 1.89 2.12 0 1.17-.83 2.12-1.89 2.12z"/>
+              </svg>
+            </DraggableIcon>
+            <DraggableIcon
+              href="mailto:contact@byimpulse.xyz"
+              ariaLabel="Send an email"
+              initialX={initialIconPositions.email.x}
+              initialY={initialIconPositions.email.y}
+              iconId="email"
+              opacity={iconsOpacity}
             >
-              <rect width="20" height="16" x="2" y="4" rx="2" />
-              <path d="m22 7-8.293 6.707a2.5 2.5 0 0 1-3.414 0L2 7" />
-            </svg>
-          </motion.a>
-        </div>
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                width="28"
+                height="28"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                strokeWidth="2"
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                className="lucide lucide-mail"
+              >
+                <rect width="20" height="16" x="2" y="4" rx="2" />
+                <path d="m22 7-8.293 6.707a2.5 2.5 0 0 1-3.414 0L2 7" />
+              </svg>
+            </DraggableIcon>
+          </>
+        )}
 
         <div className="sticky top-0 h-screen overflow-hidden">
           <motion.div style={{ opacity: heroOpacity }} className="absolute inset-0">
@@ -988,5 +1012,216 @@ const Word = ({ children, progress, range }: WordProps) => {
     <span className="relative">
       <motion.span style={{ color }}>{children} </motion.span>
     </span>
+  )
+}
+
+const iconPositions = new Map<string, { x: number; y: number; hasBeenDragged: boolean }>()
+
+type DraggableIconProps = {
+  href: string;
+  ariaLabel: string;
+  children: ReactNode;
+  initialX: number;
+  initialY: number;
+  iconId: string;
+  opacity: MotionValue<number>;
+};
+
+const DraggableIcon = ({ href, ariaLabel, children, initialX, initialY, iconId, opacity }: DraggableIconProps) => {
+  const x = useMotionValue(initialX)
+  const y = useMotionValue(initialY)
+  const velocityX = useRef(0)
+  const velocityY = useRef(0)
+  const isDragging = useRef(false)
+  const hasBeenDragged = useRef(false)
+  const animationFrameRef = useRef<number>()
+
+  const GRAVITY = 0.5
+  const FRICTION = 0.96
+  const BOUNCE = 0.4
+  const MIN_VELOCITY = 0.1
+  const VELOCITY_MULTIPLIER = 0.03
+  const ICON_SIZE = 28
+  const COLLISION_DISTANCE = ICON_SIZE * 1.2
+
+  useEffect(() => {
+    iconPositions.set(iconId, { x: initialX, y: initialY, hasBeenDragged: false })
+    return () => {
+      iconPositions.delete(iconId)
+    }
+  }, [iconId, initialX, initialY])
+
+  useEffect(() => {
+    const updatePhysics = () => {
+      if (isDragging.current) {
+        iconPositions.set(iconId, { x: x.get(), y: y.get(), hasBeenDragged: hasBeenDragged.current })
+        animationFrameRef.current = requestAnimationFrame(updatePhysics)
+        return
+      }
+
+      if (hasBeenDragged.current) {
+        velocityY.current += GRAVITY
+      }
+
+      velocityX.current *= FRICTION
+      velocityY.current *= FRICTION
+
+      const currentX = x.get()
+      const currentY = y.get()
+      const newX = currentX + velocityX.current
+      const newY = currentY + velocityY.current
+
+      const viewportWidth = window.innerWidth
+      const viewportHeight = window.innerHeight
+
+      let finalX = newX
+      let finalY = newY
+
+      if (newX < 0) {
+        finalX = 0
+        velocityX.current *= -BOUNCE
+      } else if (newX + ICON_SIZE > viewportWidth) {
+        finalX = viewportWidth - ICON_SIZE
+        velocityX.current *= -BOUNCE
+      }
+
+      if (newY < 0) {
+        finalY = 0
+        velocityY.current *= -BOUNCE
+      } else if (newY + ICON_SIZE > viewportHeight) {
+        finalY = viewportHeight - ICON_SIZE
+        velocityY.current *= -BOUNCE
+      }
+
+      const centerX = finalX + ICON_SIZE / 2
+      const centerY = finalY + ICON_SIZE / 2
+
+      Array.from(iconPositions.entries()).forEach(([otherId, otherPos]) => {
+        if (otherId === iconId) return
+
+        const otherCenterX = otherPos.x + ICON_SIZE / 2
+        const otherCenterY = otherPos.y + ICON_SIZE / 2
+
+        const dx = centerX - otherCenterX
+        const dy = centerY - otherCenterY
+        const distance = Math.sqrt(dx * dx + dy * dy)
+
+        if (distance < COLLISION_DISTANCE && distance > 0) {
+          const nx = dx / distance
+          const ny = dy / distance
+          const overlap = COLLISION_DISTANCE - distance
+          
+          finalX += nx * overlap * 0.5
+          finalY += ny * overlap * 0.5
+
+          const dotProduct = velocityX.current * nx + velocityY.current * ny
+          if (dotProduct > 0) {
+            velocityX.current -= dotProduct * nx * BOUNCE * 0.2
+            velocityY.current -= dotProduct * ny * BOUNCE * 0.2
+          }
+        }
+      })
+
+      if (hasBeenDragged.current && Math.abs(velocityX.current) < MIN_VELOCITY && Math.abs(velocityY.current) < MIN_VELOCITY) {
+        velocityX.current = 0
+        velocityY.current = 0
+      }
+
+      x.set(finalX)
+      y.set(finalY)
+
+      iconPositions.set(iconId, { x: finalX, y: finalY, hasBeenDragged: hasBeenDragged.current })
+
+      animationFrameRef.current = requestAnimationFrame(updatePhysics)
+    }
+
+    animationFrameRef.current = requestAnimationFrame(updatePhysics)
+
+    return () => {
+      if (animationFrameRef.current) {
+        cancelAnimationFrame(animationFrameRef.current)
+      }
+    }
+  }, [x, y, iconId])
+
+  const dragStartPos = useRef({ x: 0, y: 0 })
+  const hasMoved = useRef(false)
+  const linkRef = useRef<HTMLAnchorElement>(null)
+
+  const handleDragStart = (_: any, info: any) => {
+    isDragging.current = true
+    hasMoved.current = false
+    dragStartPos.current = { x: info.point.x, y: info.point.y }
+    hasBeenDragged.current = true
+    if (linkRef.current) {
+      linkRef.current.style.pointerEvents = 'none'
+    }
+  }
+
+  const handleDrag = (_: any, info: any) => {
+    const deltaX = Math.abs(info.point.x - dragStartPos.current.x)
+    const deltaY = Math.abs(info.point.y - dragStartPos.current.y)
+    if (deltaX > 5 || deltaY > 5) {
+      hasMoved.current = true
+    }
+    velocityX.current = info.velocity.x * VELOCITY_MULTIPLIER
+    velocityY.current = info.velocity.y * VELOCITY_MULTIPLIER
+  }
+
+  const handleDragEnd = (_: any, info: any) => {
+    isDragging.current = false
+    velocityX.current = info.velocity.x * VELOCITY_MULTIPLIER
+    velocityY.current = info.velocity.y * VELOCITY_MULTIPLIER
+    
+    if (hasMoved.current && linkRef.current) {
+      setTimeout(() => {
+        if (linkRef.current) {
+          linkRef.current.style.pointerEvents = 'auto'
+        }
+        setTimeout(() => {
+          hasMoved.current = false
+        }, 100)
+      }, 200)
+    } else if (linkRef.current) {
+      linkRef.current.style.pointerEvents = 'auto'
+      hasMoved.current = false
+    }
+  }
+
+  const handleClick = (e: React.MouseEvent<HTMLAnchorElement>) => {
+    if (hasMoved.current) {
+      e.preventDefault()
+      e.stopPropagation()
+      return false
+    }
+  }
+
+  return (
+    <motion.a
+      ref={linkRef}
+      href={href}
+      target={href.startsWith('mailto:') ? undefined : '_blank'}
+      rel={href.startsWith('mailto:') ? undefined : 'noopener noreferrer'}
+      className="text-gray-400 hover:text-white transition-colors duration-300 cursor-grab active:cursor-grabbing"
+      style={{
+        x,
+        y,
+        opacity,
+        position: 'fixed',
+        zIndex: 50,
+      }}
+      drag
+      dragMomentum={false}
+      dragElastic={0}
+      onDragStart={handleDragStart}
+      onDrag={handleDrag}
+      onDragEnd={handleDragEnd}
+      onClick={handleClick}
+      whileDrag={{ scale: 1.2, zIndex: 100 }}
+      whileHover={{ scale: 1.1 }}
+      aria-label={ariaLabel}
+    >
+      {children}
+    </motion.a>
   )
 }
